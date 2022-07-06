@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xconics_app_custom_widget_pages_coponents_library/Constants.dart';
+import 'login_page.dart';
 import 'Profile_Edit_Page.dart';
-import 'Login_Screen.dart';
 
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
@@ -28,7 +28,7 @@ class _InputPageState extends State<InputPage> {
               fillColor: AccentColor,
               constraints: BoxConstraints.tight(Size(250,250)),
               shape: CircleBorder(),
-              child: Text("Login Page"),
+              child: Text("Sign_Up Page"),
               onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
               },),
