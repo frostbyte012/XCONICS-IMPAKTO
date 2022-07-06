@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:xconics_app_custom_widget_pages_coponents_library/Constants.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
 
 
   TextEditingController _inputUsername = new TextEditingController();
@@ -18,9 +18,26 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _inputPassword = new TextEditingController();
   TextEditingController _inputRePassword = new TextEditingController();
 
+  bool handle_password=true;
+  bool handle_re_enter_password=true;
+
+
+  void change_handle_password()
+  {
+    handle_password=handle_password==true?false:true;
+  }
+
+  void change_handle_re_enter_password()
+  {
+    handle_re_enter_password=handle_re_enter_password==true?false:true;
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: ListView(
@@ -62,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                   //filled:true
                   counterText: "",
                   prefixIcon: Icon(Icons.person, color: AccentColor,),
-                  // suffixIcon: For Icons after text can hold any widget including the buttons as well,
+                  suffixIcon:Icon(Icons.check,color: AccentColor,),
                 ),
                 keyboardType: TextInputType.text,
                 //obsecureText: true or false for password visibility
@@ -117,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                   //errorText:null, used for error message display
                   //filled:true
                   prefixIcon: Icon(Icons.mail, color: AccentColor,),
-                  // suffixIcon: For Icons after text can hold any widget including the buttons as well,
+                  suffixIcon:Icon(Icons.check,color: AccentColor,),
                 ),
                 keyboardType: TextInputType.emailAddress,
                 //obsecureText: true or false for password visibility
@@ -171,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                   //errorText:null, used for error message display
                   //filled:true
                   prefixIcon: Icon(Icons.phone_android, color: AccentColor,),
-                  // suffixIcon: For Icons after text can hold any widget including the buttons as well,
+                  suffixIcon:Icon(Icons.check,color: AccentColor,),
                 ),
                 keyboardType: TextInputType.number,
                 //obsecureText: true or false for password visibility
@@ -225,8 +242,8 @@ class _LoginPageState extends State<LoginPage> {
                   // filledColor:
                   //errorText:null, used for error message display
                   //filled:true
-                  prefixIcon: Icon(Icons.calendar_month, color: AccentColor,),
-                  // suffixIcon: For Icons after text can hold any widget including the buttons as well,
+                  prefixIcon: Icon(Icons.edit_calendar_outlined, color: AccentColor,),
+                  suffixIcon:Icon(Icons.check,color: AccentColor,),
                 ),
                 keyboardType: TextInputType.text,
                 //obsecureText: true or false for password visibility
@@ -280,10 +297,20 @@ class _LoginPageState extends State<LoginPage> {
                   //errorText:null, used for error message display
                   //filled:true
                   prefixIcon: Icon(Icons.lock, color: AccentColor,),
-                  // suffixIcon: For Icons after text can hold any widget including the buttons as well,
+                  suffixIcon: IconButton(
+                    icon:Icon(Icons.warning,color: AccentColor,),
+                    onPressed: (){
+
+
+                      setState((){
+                        change_handle_password();
+                      });
+
+
+                    },),
 
                 ),
-                obscureText: true,
+                obscureText: handle_password,
                 keyboardType: TextInputType.text,
                 maxLength: 60,
                 maxLines: 1,
@@ -336,9 +363,20 @@ class _LoginPageState extends State<LoginPage> {
                   //errorText:null, used for error message display
                   //filled:true
                   prefixIcon: Icon(Icons.lock, color: AccentColor,),
-                  // suffixIcon: For Icons after text can hold any widget including the buttons as well,
-                ),
-                obscureText: true,
+                  suffixIcon: IconButton(
+                    icon:Icon(Icons.warning,color: AccentColor,),
+                    onPressed: (){
+
+
+                      setState((){
+                        change_handle_re_enter_password();
+                      });
+
+
+                    },),
+
+                 ),
+                obscureText: handle_re_enter_password,
                 keyboardType: TextInputType.text,
                 maxLength: 60,
                 maxLines: 1,
@@ -365,7 +403,7 @@ class _LoginPageState extends State<LoginPage> {
             child: MaterialButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(22.0)),
-              minWidth: 200.0,
+              minWidth: 230.0,
               height: 47,
               color: AccentColor,
               child: new Text('Register',
@@ -379,6 +417,8 @@ class _LoginPageState extends State<LoginPage> {
               },
             ),
           ),
+
+          SizedBox(height:10,),
 
         ],
       ),
