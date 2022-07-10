@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xconics_app_custom_widget_pages_coponents_library/Constants.dart';
+import 'package:xconics_app_custom_widget_pages_coponents_library/Pages/HomeScreen.dart';
 import 'sign_up_screen.dart';
 import 'forgot_password_enter_otp.dart';
 
@@ -173,9 +174,9 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold)),
               onPressed: () {
-                // setState(() {
-                //   _isNeedHelp = true;
-                // });
+
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>HomeScreen()));
+
               },
             ),
           ),
