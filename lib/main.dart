@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Pages/InputPage.dart';
+import 'Pages/login_page.dart';
 
 void main()=>runApp(MyApp(),);
 
@@ -15,8 +16,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-          theme: ThemeData.dark(),
-          home:InputPage(),
+          theme: ThemeData.light(),
+          home:LoginPage(),
       
     );
   }
