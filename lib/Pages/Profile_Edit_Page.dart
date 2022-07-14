@@ -36,10 +36,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         backgroundColor:AccentColor,
         title:Text('Profile edit'),
       ),
-
-      drawer: ListBody(
-      ),
-
+      
       body:ListView(
         children: [
           Divider(),
