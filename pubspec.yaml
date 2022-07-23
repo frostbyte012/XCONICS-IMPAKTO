@@ -34,7 +34,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+2
   widget_circular_animator: ^1.0.0
   slide_to_act: ^2.0.1
-  fl_chart: ^0.55.0
+  syncfusion_flutter_charts: ^20.2.39
 
 
 
@@ -74,6 +74,7 @@ flutter:
     - images/
     - images/appbar/
     - images/calibration/shoe.png
+    - images/profile/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
