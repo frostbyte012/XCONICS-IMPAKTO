@@ -9,6 +9,7 @@ import 'package:xconics_app_custom_widget_pages_coponents_library/Pages/walk_cal
 import 'settings.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'faq_screen.dart';
+import 'health_file.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -52,7 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
        current_text=manual_text;
        current_icon=manual_icon;
        mode=0;
-     });
+      }
+     );
    }
 
    void manualTap()
@@ -180,8 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 currentAccountPicture: GestureDetector(
                   onTap: (){},
                   child: CircleAvatar(
-                    //backgroundImage: ,
-                    child: Icon(Icons.person,color: Colors.white,),
+                    backgroundImage:AssetImage('images/profile/1658261393582.jpg'),
                     backgroundColor: Colors.grey,
 
                   ),
@@ -388,7 +389,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(onPressed: (){ tapHealth();}, icon:Icon(Icons.health_and_safety_outlined,size:25,color: health_icon_color)),
+                  IconButton(onPressed: (){
+                    tapHealth();
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>HealthScreen()));
+                    },
+                      icon:Icon(Icons.health_and_safety_outlined,size:25,color: health_icon_color)),
                   Text("Health",style: TextStyle(color: health_icon_color,fontSize: 10),),
                 ],
               ),
