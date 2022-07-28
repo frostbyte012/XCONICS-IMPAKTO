@@ -10,6 +10,7 @@ import 'settings.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'faq_screen.dart';
 import 'health_file.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,6 +20,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  FlutterBlue flutterBlue = FlutterBlue.instance;
+
+  Future<void> flutter_Blue() async {
+    await flutterBlue.startScan(timeout: Duration(seconds: 4));
+
+// Listen to scan results
+    var subscription = flutterBlue.scanResults.listen((results) {
+      // do something with scan results
+      for (ScanResult r in results) {
+        print('${r.device.name} found! rssi: ${r.rssi}');
+      }
+    });
+
+// Stop scanning
+    flutterBlue.stopScan();
+  }
+
+  Future<void> blue_connect()async
+  {
+    // Connect to the device
+    var device;
+    await device.connect();
+
+// Disconnect from device
+    device.disconnect();
+  }
 
    var AutoTextColor = InactiveTextSliderColor;
    var AutoColor= InactiveCardColor;
@@ -150,6 +178,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    flutter_Blue();
+    blue_connect();
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
