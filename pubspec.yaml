@@ -35,6 +35,7 @@ dependencies:
   widget_circular_animator: ^1.0.0
   slide_to_act: ^2.0.1
   syncfusion_flutter_charts: ^20.2.39
+  flutter_blue: ^0.8.0
 
 
 
