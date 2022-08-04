@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "509452077359",
+    "project_id": "impakto-navigator-4e1e6",
+    "storage_bucket": "impakto-navigator-4e1e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509452077359:android:a613b8c5868c513f7139da",
+        "android_client_info": {
+          "package_name": "com.example.xconics_app_custom_widget_pages_coponents_library"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509452077359-p7pluu5iqk0sqhu0pm1hffh0hsoanlcp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.xconics_app_custom_widget_pages_coponents_library",
+            "certificate_hash": "69f4f8897d23d2c5dd5bdde5aa79fa58bbfc960f"
+          }
+        },
+        {
+          "client_id": "509452077359-tjoogrrgqt4vrv8pa66vcgeclj53fpnk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-Stt1UOEWycVh3MgPcnJIO-JEltL4WJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509452077359-tjoogrrgqt4vrv8pa66vcgeclj53fpnk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
