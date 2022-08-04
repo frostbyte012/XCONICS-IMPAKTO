@@ -12,6 +12,7 @@ import 'faq_screen.dart';
 import 'health_file.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -283,6 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
+
             InkWell(
               onTap: (){},
               child: ListTile(
@@ -291,6 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
+
             InkWell(
               onTap: (){},
               child: ListTile(
@@ -298,6 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: Text("Support"),
               ),
             ),
+
 
             InkWell(
               onTap: (){},
@@ -368,25 +372,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [
-                        Text("0.0",style: TextStyle(fontSize: 30),),
-                        Text("Distance(mi)",style: TextStyle(color: AccentColor,fontWeight: FontWeight.bold)),
-                      ],
+                    InkWell(
+                      onTap: (){},
+                      child: Column(
+                        children: [
+                          Text("0.0",style: TextStyle(fontSize: 30),),
+                          Text("Distance(mi)",style: TextStyle(color: AccentColor,fontWeight: FontWeight.bold)),
+                        ],
+                      ),
                     ),
                     SizedBox(width: 35,),
-                    Column(
-                      children: [
-                        Text("0.0",style: TextStyle(fontSize: 30),),
-                        Text("BMI",style: TextStyle(color: AccentColor,fontWeight: FontWeight.bold),),
-                      ],
+                    InkWell(
+                      onTap: (){},
+                      child: Column(
+                        children: [
+                          Text("0.0",style: TextStyle(fontSize: 30),),
+                          Text("BMI",style: TextStyle(color: AccentColor,fontWeight: FontWeight.bold),),
+                        ],
+                      ),
                     ),
                     SizedBox(width: 50,),
-                    Column(
-                      children: [
-                        Text("0.0",style: TextStyle(fontSize: 30),),
-                        Text("Calories",style: TextStyle(color: AccentColor,fontWeight: FontWeight.bold)),
-                      ],
+                    InkWell(
+                      onTap:(){},
+                      child: Column(
+                        children: [
+                          Text("0.0",style: TextStyle(fontSize: 30),),
+                          Text("Calories",style: TextStyle(color: AccentColor,fontWeight: FontWeight.bold)),
+                        ],
+                      ),
                     ),
                   ],
                 ),
