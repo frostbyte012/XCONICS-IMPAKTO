@@ -3,6 +3,7 @@ import 'package:xconics_app_custom_widget_pages_coponents_library/Constants.dart
 import 'package:xconics_app_custom_widget_pages_coponents_library/Pages/HomeScreen.dart';
 import 'sign_up_screen.dart';
 import 'forgot_password_enter_otp.dart';
+import 'package:xconics_app_custom_widget_pages_coponents_library/services/user_services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-
+  final _formKey=GlobalKey<FormState>();
   TextEditingController _inputEmail = new TextEditingController();
   TextEditingController _inputPassword = new TextEditingController();
 
@@ -30,193 +31,200 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ListView(
+      body: Form(
+        key: _formKey,
+        child: ListView(
 
-        children: [
+          children: [
 
 
-          Image.asset("images/logo_display.png", fit: BoxFit.fill,),
+            Image.asset("images/logo_display.png", fit: BoxFit.fill,),
 
-          SizedBox(height: 30,),
+            SizedBox(height: 30,),
 
-          Center(
-            child: SizedBox(
-              height: 45,
-              width: 320,
-              child: TextFormField(
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
-                  counterText: "",
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  labelText: "Enter Email.",
-                  labelStyle: TextStyle(color: TextFillColor),
-                  // border:OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(30),
-                  // ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
+            Center(
+              child: SizedBox(
+                height: 45,
+                width: 320,
+                child: TextFormField(
+                  style: TextStyle(color: Colors.grey),
+                  decoration: InputDecoration(
+                    counterText: "",
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    labelText: "Enter Email.",
+                    labelStyle: TextStyle(color: TextFillColor),
+                    // border:OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
+                    // hintText: can be used
+                    // hintStyle can be used for the styling of the hintText,
+                    // filledColor:
+                    //errorText:null, used for error message display
+                    //filled:true
+                    prefixIcon: Icon(Icons.mail, color: AccentColor,),
+                    suffixIcon: Icon(Icons.check,color: AccentColor,),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
-                  // hintText: can be used
-                  // hintStyle can be used for the styling of the hintText,
-                  // filledColor:
-                  //errorText:null, used for error message display
-                  //filled:true
-                  prefixIcon: Icon(Icons.mail, color: AccentColor,),
-                  suffixIcon: Icon(Icons.check,color: AccentColor,),
+                  keyboardType: TextInputType.emailAddress,
+                  //obsecureText: true or false for password visibility
+                  maxLength: 60,
+                  maxLines: 1,
+                  controller: _inputEmail,
+                  validator: (value) {
+                    RegExp regex = new RegExp(r'^.{2,}$');
+                    if (value!.isEmpty) {
+                      return ("Email cannot be empty");
+                    }
+                    if (!regex.hasMatch(value)) {
+                      return ("Enter Valid Email");
+                    }
+                  },
+                  onSaved: (value) {
+                    _inputEmail.text = value!;
+                  },
                 ),
-                keyboardType: TextInputType.emailAddress,
-                //obsecureText: true or false for password visibility
-                maxLength: 60,
-                maxLines: 1,
-                controller: _inputEmail,
-                validator: (value) {
-                  RegExp regex = new RegExp(r'^.{2,}$');
-                  if (value!.isEmpty) {
-                    return ("Email cannot be empty");
-                  }
-                  if (!regex.hasMatch(value)) {
-                    return ("Enter Valid Email");
-                  }
-                },
-                onSaved: (value) {
-                  _inputEmail.text = value!;
+              ),
+            ),
+
+
+
+
+            SizedBox(height: 20,),
+
+            Center(
+              child: SizedBox(
+                height: 45,
+                width: 320,
+                child: TextFormField(
+                  style: TextStyle(color: Colors.grey),
+                  decoration: InputDecoration(
+                    counterText: "",
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    labelText: "Enter Password.",
+                    labelStyle: TextStyle(color: TextFillColor),
+                    // border:OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
+                    // hintText: can be used
+                    // hintStyle can be used for the styling of the hintText,
+                    // filledColor:
+                    //errorText:null, used for error message display
+                    //filled:true
+                    prefixIcon: Icon(Icons.lock, color: AccentColor,),
+                    suffixIcon: IconButton(
+                      icon:Icon(Icons.warning,color: AccentColor,),
+                      onPressed: (){
+
+
+                        setState((){
+                          change_handle_password();
+                        });
+
+
+                      },),
+
+                  ),
+                  obscureText: handle_password,
+                  keyboardType: TextInputType.text,
+                  maxLength: 60,
+                  maxLines: 1,
+                  controller: _inputPassword,
+                  validator: (value) {
+                    RegExp regex = new RegExp(r'^.{2,}$');
+                    if (value!.isEmpty) {
+                      return ("Password cannot be empty");
+                    }
+                    if (!regex.hasMatch(value)) {
+                      return ("Enter Valid Password");
+                    }
+                  },
+                  onSaved: (value) {
+                    _inputPassword.text = value!;
+                  },
+                ),
+              ),
+            ),
+
+
+            SizedBox(height: 30,),
+
+            Center(
+              child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(22.0)),
+                minWidth: 230.0,
+                height: 47,
+                color: AccentColor,
+                child: new Text('Login',
+                    style: new TextStyle(fontSize: 16.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+                onPressed: () {
+
+                 
+                  UserServices user = UserServices();
+
+                  user.SignIn(_inputEmail.text, _inputPassword.text, HomeScreen(), _formKey, context);
+
+                  
                 },
               ),
             ),
-          ),
 
+            SizedBox(height: 30,),
 
-
-
-          SizedBox(height: 20,),
-
-          Center(
-            child: SizedBox(
-              height: 45,
-              width: 320,
-              child: TextFormField(
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
-                  counterText: "",
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  labelText: "Enter Password.",
-                  labelStyle: TextStyle(color: TextFillColor),
-                  // border:OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(30),
-                  // ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
-                  // hintText: can be used
-                  // hintStyle can be used for the styling of the hintText,
-                  // filledColor:
-                  //errorText:null, used for error message display
-                  //filled:true
-                  prefixIcon: Icon(Icons.lock, color: AccentColor,),
-                  suffixIcon: IconButton(
-                    icon:Icon(Icons.warning,color: AccentColor,),
-                    onPressed: (){
-
-
-                      setState((){
-                        change_handle_password();
-                      });
-
-
-                    },),
-
-                ),
-                obscureText: handle_password,
-                keyboardType: TextInputType.text,
-                maxLength: 60,
-                maxLines: 1,
-                controller: _inputPassword,
-                validator: (value) {
-                  RegExp regex = new RegExp(r'^.{2,}$');
-                  if (value!.isEmpty) {
-                    return ("Password cannot be empty");
-                  }
-                  if (!regex.hasMatch(value)) {
-                    return ("Enter Valid Password");
-                  }
-                },
-                onSaved: (value) {
-                  _inputPassword.text = value!;
-                },
-              ),
-            ),
-          ),
-
-
-          SizedBox(height: 30,),
-
-          Center(
-            child: MaterialButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(22.0)),
-              minWidth: 230.0,
-              height: 47,
-              color: AccentColor,
-              child: new Text('Login',
-                  style: new TextStyle(fontSize: 16.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold)),
-              onPressed: () {
-
-                Navigator.push(context,MaterialPageRoute(builder: (context)=>HomeScreen()));
-
+            GestureDetector(
+              child: Center(
+                  child: Text(
+                    "Forgot Password",
+                    style: TextStyle(
+                        color:AccentColor,
+                        fontSize:16),
+                    ),
+                 ),
+              onTap: (){
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>ForgotPasswordOTP()));
               },
             ),
-          ),
 
-          SizedBox(height: 30,),
 
-          GestureDetector(
-            child: Center(
+            SizedBox(height: 10,),
+
+            GestureDetector(
+              child: Center(
                 child: Text(
-                  "Forgot Password",
+                  "Create an Account... SignUp",
                   style: TextStyle(
                       color:AccentColor,
                       fontSize:16),
-                  ),
-               ),
-            onTap: (){
-              Navigator.push(context,MaterialPageRoute(builder: (context)=>ForgotPasswordOTP()));
-            },
-          ),
-
-
-          SizedBox(height: 10,),
-
-          GestureDetector(
-            child: Center(
-              child: Text(
-                "Create an Account... SignUp",
-                style: TextStyle(
-                    color:AccentColor,
-                    fontSize:16),
+                ),
               ),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
+              },
             ),
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
-            },
-          ),
 
 
 
-        ],
+          ],
+        ),
       ),
     );
   }
