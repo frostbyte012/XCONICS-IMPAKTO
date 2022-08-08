@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'Pages/InputPage.dart';
 import 'Pages/login_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main()=>runApp(MyApp(),);
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
+
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
