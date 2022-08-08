@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xconics_app_custom_widget_pages_coponents_library/Constants.dart';
+import 'package:xconics_app_custom_widget_pages_coponents_library/Pages/HomeScreen.dart';
+import 'package:xconics_app_custom_widget_pages_coponents_library/services/user_services.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -11,6 +13,12 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
 
 
+  final _formKey=GlobalKey<FormState>();
+
+  UserServices userReg = UserServices();
+
+  TextEditingController _inputFirstname = new TextEditingController();
+  TextEditingController _inputLastname = new TextEditingController();
   TextEditingController _inputUsername = new TextEditingController();
   TextEditingController _inputEmail = new TextEditingController();
   TextEditingController _inputMobileNumber = new TextEditingController();
@@ -38,389 +46,522 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
 
 
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ListView(
+      body: Form(
+        key: _formKey,
+        child: ListView(
 
-        children: [
+          children: [
 
 
-          Image.asset("images/logo_display.png", fit: BoxFit.fill,),
+            Image.asset("images/logo_display.png", fit: BoxFit.fill,),
 
-          SizedBox(height: 10,),
+            SizedBox(height: 10,),
 
-          Center(
-            child: SizedBox(
-              height: 45,
-              width: 320,
-              child: TextFormField(
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  labelText: "Enter Username.",
-                  labelStyle: TextStyle(color: TextFillColor),
+            Center(
+              child: SizedBox(
+                height: 45,
+                width: 320,
+                child: TextFormField(
+                  style: TextStyle(color: Colors.grey),
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    labelText: "Enter First Name.",
+                    labelStyle: TextStyle(color: TextFillColor),
 
-                  // border:OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(30),
-                  // ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
+                    // border:OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
+                    // hintText: can be used
+                    // hintStyle can be used for the styling of the hintText,
+                    // filledColor:
+                    //errorText:null, used for error message display
+                    //filled:true
+                    counterText: "",
+                    prefixIcon: Icon(Icons.person, color: AccentColor,),
+                    suffixIcon:Icon(Icons.check,color: AccentColor,),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
-                  // hintText: can be used
-                  // hintStyle can be used for the styling of the hintText,
-                  // filledColor:
-                  //errorText:null, used for error message display
-                  //filled:true
-                  counterText: "",
-                  prefixIcon: Icon(Icons.person, color: AccentColor,),
-                  suffixIcon:Icon(Icons.check,color: AccentColor,),
+                  keyboardType: TextInputType.text,
+                  //obsecureText: true or false for password visibility
+                  maxLength: 60,
+                  maxLines: 1,
+                  controller: _inputFirstname,
+                  validator: (value) {
+                    RegExp regex = new RegExp(r'^.{2,}$');
+                    if (value!.isEmpty) {
+                      return ("First name cannot be empty");
+                    }
+                    if (!regex.hasMatch(value)) {
+                      return ("Enter Valid First name");
+                    }
+                  },
+                  onSaved: (value) {
+                    _inputUsername.text = value!;
+                  },
                 ),
-                keyboardType: TextInputType.text,
-                //obsecureText: true or false for password visibility
-                maxLength: 60,
-                maxLines: 1,
-                controller: _inputUsername,
-                validator: (value) {
-                  RegExp regex = new RegExp(r'^.{2,}$');
-                  if (value!.isEmpty) {
-                    return ("User name cannot be empty");
-                  }
-                  if (!regex.hasMatch(value)) {
-                    return ("Enter Valid User name");
-                  }
-                },
-                onSaved: (value) {
-                  _inputUsername.text = value!;
-                },
               ),
             ),
-          ),
 
 
-          SizedBox(height: 20,),
+            SizedBox(height: 20,),
 
-          Center(
-            child: SizedBox(
-              height: 45,
-              width: 320,
-              child: TextFormField(
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
-                  counterText: "",
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  labelText: "Enter Email.",
-                  labelStyle: TextStyle(color: TextFillColor),
-                  // border:OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(30),
-                  // ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
+            Center(
+              child: SizedBox(
+                height: 45,
+                width: 320,
+                child: TextFormField(
+                  style: TextStyle(color: Colors.grey),
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    labelText: "Enter Last Name.",
+                    labelStyle: TextStyle(color: TextFillColor),
+
+                    // border:OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
+                    // hintText: can be used
+                    // hintStyle can be used for the styling of the hintText,
+                    // filledColor:
+                    //errorText:null, used for error message display
+                    //filled:true
+                    counterText: "",
+                    prefixIcon: Icon(Icons.person, color: AccentColor,),
+                    suffixIcon:Icon(Icons.check,color: AccentColor,),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
-                  // hintText: can be used
-                  // hintStyle can be used for the styling of the hintText,
-                  // filledColor:
-                  //errorText:null, used for error message display
-                  //filled:true
-                  prefixIcon: Icon(Icons.mail, color: AccentColor,),
-                  suffixIcon:Icon(Icons.check,color: AccentColor,),
+                  keyboardType: TextInputType.text,
+                  //obsecureText: true or false for password visibility
+                  maxLength: 60,
+                  maxLines: 1,
+                  controller: _inputLastname,
+                  validator: (value) {
+                    RegExp regex = new RegExp(r'^.{2,}$');
+                    if (value!.isEmpty) {
+                      return ("Last name cannot be empty");
+                    }
+                    if (!regex.hasMatch(value)) {
+                      return ("Enter Valid Lasr name");
+                    }
+                  },
+                  onSaved: (value) {
+                    _inputUsername.text = value!;
+                  },
                 ),
-                keyboardType: TextInputType.emailAddress,
-                //obsecureText: true or false for password visibility
-                maxLength: 60,
-                maxLines: 1,
-                controller: _inputEmail,
-                validator: (value) {
-                  RegExp regex = new RegExp(r'^.{2,}$');
-                  if (value!.isEmpty) {
-                    return ("Email cannot be empty");
-                  }
-                  if (!regex.hasMatch(value)) {
-                    return ("Enter Valid Email");
-                  }
-                },
-                onSaved: (value) {
-                  _inputEmail.text = value!;
-                },
               ),
             ),
-          ),
 
-          SizedBox(height: 20,),
 
-          Center(
-            child: SizedBox(
-              height: 45,
-              width: 320,
-              child: TextFormField(
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
-                  counterText: "",
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  labelText: "Enter Mobile number.",
-                  labelStyle: TextStyle(color: TextFillColor),
-                  // border:OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(30),
-                  // ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
+            SizedBox(height: 20,),
+
+            Center(
+              child: SizedBox(
+                height: 45,
+                width: 320,
+                child: TextFormField(
+                  style: TextStyle(color: Colors.grey),
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    labelText: "Enter Username.",
+                    labelStyle: TextStyle(color: TextFillColor),
+
+                    // border:OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
+                    // hintText: can be used
+                    // hintStyle can be used for the styling of the hintText,
+                    // filledColor:
+                    //errorText:null, used for error message display
+                    //filled:true
+                    counterText: "",
+                    prefixIcon: Icon(Icons.person, color: AccentColor,),
+                    suffixIcon:Icon(Icons.check,color: AccentColor,),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
-                  // hintText: can be used
-                  // hintStyle can be used for the styling of the hintText,
-                  // filledColor:
-                  //errorText:null, used for error message display
-                  //filled:true
-                  prefixIcon: Icon(Icons.phone_android, color: AccentColor,),
-                  suffixIcon:Icon(Icons.check,color: AccentColor,),
+                  keyboardType: TextInputType.text,
+                  //obsecureText: true or false for password visibility
+                  maxLength: 60,
+                  maxLines: 1,
+                  controller: _inputUsername,
+                  validator: (value) {
+                    RegExp regex = new RegExp(r'^.{2,}$');
+                    if (value!.isEmpty) {
+                      return ("User name cannot be empty");
+                    }
+                    if (!regex.hasMatch(value)) {
+                      return ("Enter Valid User name");
+                    }
+                  },
+                  onSaved: (value) {
+                    _inputUsername.text = value!;
+                  },
                 ),
-                keyboardType: TextInputType.number,
-                //obsecureText: true or false for password visibility
-                maxLength: 60,
-                maxLines: 1,
-                controller: _inputMobileNumber,
-                validator: (value) {
-                  RegExp regex = new RegExp(r'^.{2,}$');
-                  if (value!.isEmpty) {
-                    return ("Mobile Number cannot be empty");
-                  }
-                  if (!regex.hasMatch(value)) {
-                    return ("Enter Mobile Number.");
-                  }
-                },
-                onSaved: (value) {
-                  _inputMobileNumber.text = value!;
-                },
               ),
             ),
-          ),
 
 
-          SizedBox(height: 20,),
+            SizedBox(height: 20,),
 
-          Center(
-            child: SizedBox(
-              height: 45,
-              width: 320,
-              child: TextFormField(
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
-                  counterText: "",
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  labelText: "Enter Date of Birth.",
-                  labelStyle: TextStyle(color: TextFillColor),
-                  // border:OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(30),
-                  // ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
+            Center(
+              child: SizedBox(
+                height: 45,
+                width: 320,
+                child: TextFormField(
+                  style: TextStyle(color: Colors.grey),
+                  decoration: InputDecoration(
+                    counterText: "",
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    labelText: "Enter Email.",
+                    labelStyle: TextStyle(color: TextFillColor),
+                    // border:OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
+                    // hintText: can be used
+                    // hintStyle can be used for the styling of the hintText,
+                    // filledColor:
+                    //errorText:null, used for error message display
+                    //filled:true
+                    prefixIcon: Icon(Icons.mail, color: AccentColor,),
+                    suffixIcon:Icon(Icons.check,color: AccentColor,),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
-                  // hintText: can be used
-                  // hintStyle can be used for the styling of the hintText,
-                  // filledColor:
-                  //errorText:null, used for error message display
-                  //filled:true
-                  prefixIcon: Icon(Icons.edit_calendar_outlined, color: AccentColor,),
-                  suffixIcon:Icon(Icons.check,color: AccentColor,),
+                  keyboardType: TextInputType.emailAddress,
+                  //obsecureText: true or false for password visibility
+                  maxLength: 60,
+                  maxLines: 1,
+                  controller: _inputEmail,
+                  validator: (value) {
+                    RegExp regex = new RegExp(r'^.{2,}$');
+                    if (value!.isEmpty) {
+                      return ("Email cannot be empty");
+                    }
+                    if (!regex.hasMatch(value)) {
+                      return ("Enter Valid Email");
+                    }
+                  },
+                  onSaved: (value) {
+                    _inputEmail.text = value!;
+                  },
                 ),
-                keyboardType: TextInputType.text,
-                //obsecureText: true or false for password visibility
-                maxLength: 60,
-                maxLines: 1,
-                controller: _inputDOB,
-                validator: (value) {
-                  RegExp regex = new RegExp(r'^.{2,}$');
-                  if (value!.isEmpty) {
-                    return ("Date of Birth cannot be empty");
-                  }
-                  if (!regex.hasMatch(value)) {
-                    return ("Enter Valid Date of Birth");
-                  }
-                },
-                onSaved: (value) {
-                  _inputDOB.text = value!;
-                },
               ),
             ),
-          ),
 
-          SizedBox(height: 20,),
+            SizedBox(height: 20,),
 
-          Center(
-            child: SizedBox(
-              height: 45,
-              width: 320,
-              child: TextFormField(
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
-                  counterText: "",
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  labelText: "Enter Password.",
-                  labelStyle: TextStyle(color: TextFillColor),
-                  // border:OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(30),
-                  // ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
+            Center(
+              child: SizedBox(
+                height: 45,
+                width: 320,
+                child: TextFormField(
+                  style: TextStyle(color: Colors.grey),
+                  decoration: InputDecoration(
+                    counterText: "",
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    labelText: "Enter Mobile number.",
+                    labelStyle: TextStyle(color: TextFillColor),
+                    // border:OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
+                    // hintText: can be used
+                    // hintStyle can be used for the styling of the hintText,
+                    // filledColor:
+                    //errorText:null, used for error message display
+                    //filled:true
+                    prefixIcon: Icon(Icons.phone_android, color: AccentColor,),
+                    suffixIcon:Icon(Icons.check,color: AccentColor,),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
-                  // hintText: can be used
-                  // hintStyle can be used for the styling of the hintText,
-                  // filledColor:
-                  //errorText:null, used for error message display
-                  //filled:true
-                  prefixIcon: Icon(Icons.lock, color: AccentColor,),
-                  suffixIcon: IconButton(
-                    icon:Icon(Icons.warning,color: AccentColor,),
-                    onPressed: (){
-
-
-                      setState((){
-                        change_handle_password();
-                      });
-
-
-                    },),
-
+                  keyboardType: TextInputType.number,
+                  //obsecureText: true or false for password visibility
+                  maxLength: 60,
+                  maxLines: 1,
+                  controller: _inputMobileNumber,
+                  validator: (value) {
+                    RegExp regex = new RegExp(r'^.{2,}$');
+                    if (value!.isEmpty) {
+                      return ("Mobile Number cannot be empty");
+                    }
+                    if (!regex.hasMatch(value)) {
+                      return ("Enter Mobile Number.");
+                    }
+                  },
+                  onSaved: (value) {
+                    _inputMobileNumber.text = value!;
+                  },
                 ),
-                obscureText: handle_password,
-                keyboardType: TextInputType.text,
-                maxLength: 60,
-                maxLines: 1,
-                controller: _inputPassword,
-                validator: (value) {
-                  RegExp regex = new RegExp(r'^.{2,}$');
-                  if (value!.isEmpty) {
-                    return ("Password cannot be empty");
-                  }
-                  if (!regex.hasMatch(value)) {
-                    return ("Enter Valid Password");
-                  }
-                },
-                onSaved: (value) {
-                  _inputPassword.text = value!;
+              ),
+            ),
+
+
+            SizedBox(height: 20,),
+
+            Center(
+              child: SizedBox(
+                height: 45,
+                width: 320,
+                child: TextFormField(
+                  style: TextStyle(color: Colors.grey),
+                  decoration: InputDecoration(
+                    counterText: "",
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    labelText: "Enter Date of Birth.",
+                    labelStyle: TextStyle(color: TextFillColor),
+                    // border:OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
+                    // hintText: can be used
+                    // hintStyle can be used for the styling of the hintText,
+                    // filledColor:
+                    //errorText:null, used for error message display
+                    //filled:true
+                    prefixIcon: Icon(Icons.edit_calendar_outlined, color: AccentColor,),
+                    suffixIcon:Icon(Icons.check,color: AccentColor,),
+                  ),
+                  keyboardType: TextInputType.text,
+                  //obsecureText: true or false for password visibility
+                  maxLength: 60,
+                  maxLines: 1,
+                  controller: _inputDOB,
+                  validator: (value) {
+                    RegExp regex = new RegExp(r'^.{2,}$');
+                    if (value!.isEmpty) {
+                      return ("Date of Birth cannot be empty");
+                    }
+                    if (!regex.hasMatch(value)) {
+                      return ("Enter Valid Date of Birth");
+                    }
+                  },
+                  onSaved: (value) {
+                    _inputDOB.text = value!;
+                  },
+                ),
+              ),
+            ),
+
+            SizedBox(height: 20,),
+
+            Center(
+              child: SizedBox(
+                height: 45,
+                width: 320,
+                child: TextFormField(
+                  style: TextStyle(color: Colors.grey),
+                  decoration: InputDecoration(
+                    counterText: "",
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    labelText: "Enter Password.",
+                    labelStyle: TextStyle(color: TextFillColor),
+                    // border:OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
+                    // hintText: can be used
+                    // hintStyle can be used for the styling of the hintText,
+                    // filledColor:
+                    //errorText:null, used for error message display
+                    //filled:true
+                    prefixIcon: Icon(Icons.lock, color: AccentColor,),
+                    suffixIcon: IconButton(
+                      icon:Icon(Icons.warning,color: AccentColor,),
+                      onPressed: (){
+
+
+                        setState((){
+                          change_handle_password();
+                        });
+
+
+                      },),
+
+                  ),
+                  obscureText: handle_password,
+                  autofocus: false,
+                  keyboardType: TextInputType.text,
+                  maxLength: 60,
+                  maxLines: 1,
+                  controller: _inputPassword,
+                  validator: (value) {
+                    RegExp regex = new RegExp(r'^.{6,}$');
+                    if (value!.isEmpty) {
+                      return ("Password cannot be empty");
+                    }
+                    if (!regex.hasMatch(value)) {
+                      return ("Enter Valid Password");
+                    }
+                  },
+                  onSaved: (value) {
+                    _inputPassword.text = value!;
+                  },
+                ),
+              ),
+            ),
+
+
+            SizedBox(height: 20,),
+
+            Center(
+              child: SizedBox(
+                height: 45,
+                width: 320,
+                child: TextFormField(
+                  style: TextStyle(color: Colors.grey),
+                  decoration: InputDecoration(
+                    counterText: "",
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    labelText: "Re-enter Password.",
+                    labelStyle: TextStyle(color: TextFillColor),
+                    // border:OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(30),
+                    // ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AccentColor, width: 1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
+                    // hintText: can be used
+                    // hintStyle can be used for the styling of the hintText,
+                    // filledColor:
+                    //errorText:null, used for error message display
+                    //filled:true
+                    prefixIcon: Icon(Icons.lock, color: AccentColor,),
+                    suffixIcon: IconButton(
+                      icon:Icon(Icons.warning,color: AccentColor,),
+                      onPressed: (){
+
+
+                        setState((){
+                          change_handle_re_enter_password();
+                        });
+
+
+                      },),
+
+                   ),
+                  obscureText: handle_re_enter_password,
+                  keyboardType: TextInputType.text,
+                  maxLength: 60,
+                  maxLines: 1,
+                  controller: _inputRePassword,
+                  validator: (value){
+                    if(_inputPassword.text!= _inputRePassword.text){
+
+                      return "password don't match";
+
+                    }
+                    else{
+                      return null;
+                    }
+                  },
+                  onSaved: (value) {
+                    _inputRePassword.text = value!;
+                  },
+                ),
+              ),
+            ),
+
+            SizedBox(height: 30,),
+
+            Center(
+              child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(22.0)),
+                minWidth: 230.0,
+                height: 47,
+                color: AccentColor,
+                child: new Text('Register',
+                    style: new TextStyle(fontSize: 16.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+                onPressed: () {
+
+                  //Trigger function for the registration of user :
+
+                  userReg.Registration(
+                      _inputEmail.text,
+                      _inputPassword.text,
+                      _formKey,
+                      HomeScreen(),
+                      context,
+                      _inputFirstname.text,
+                      _inputLastname.text,
+                      _inputUsername.text,
+                      _inputMobileNumber.text,
+                      _inputDOB.text,
+                  );
+
+
+
                 },
               ),
             ),
-          ),
 
+            SizedBox(height:10,),
 
-          SizedBox(height: 20,),
-
-          Center(
-            child: SizedBox(
-              height: 45,
-              width: 320,
-              child: TextFormField(
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
-                  counterText: "",
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  labelText: "Re-enter Password.",
-                  labelStyle: TextStyle(color: TextFillColor),
-                  // border:OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(30),
-                  // ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AccentColor, width: 1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  //border:OutLineInputBorder or UnderLineInputBorder or InputBorder.none
-                  // hintText: can be used
-                  // hintStyle can be used for the styling of the hintText,
-                  // filledColor:
-                  //errorText:null, used for error message display
-                  //filled:true
-                  prefixIcon: Icon(Icons.lock, color: AccentColor,),
-                  suffixIcon: IconButton(
-                    icon:Icon(Icons.warning,color: AccentColor,),
-                    onPressed: (){
-
-
-                      setState((){
-                        change_handle_re_enter_password();
-                      });
-
-
-                    },),
-
-                 ),
-                obscureText: handle_re_enter_password,
-                keyboardType: TextInputType.text,
-                maxLength: 60,
-                maxLines: 1,
-                controller: _inputRePassword,
-                validator: (value) {
-                  RegExp regex = new RegExp(r'^.{2,}$');
-                  if (value!.isEmpty) {
-                    return ("Password cannot be empty");
-                  }
-                  if (!regex.hasMatch(value)) {
-                    return ("Enter Valid Password");
-                  }
-                },
-                onSaved: (value) {
-                  _inputRePassword.text = value!;
-                },
-              ),
-            ),
-          ),
-
-          SizedBox(height: 30,),
-
-          Center(
-            child: MaterialButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(22.0)),
-              minWidth: 230.0,
-              height: 47,
-              color: AccentColor,
-              child: new Text('Register',
-                  style: new TextStyle(fontSize: 16.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold)),
-              onPressed: () {
-                // setState(() {
-                //   _isNeedHelp = true;
-                // });
-              },
-            ),
-          ),
-
-          SizedBox(height:10,),
-
-        ],
+          ],
+        ),
       ),
     );
   }
