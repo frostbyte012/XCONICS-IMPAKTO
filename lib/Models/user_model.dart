@@ -2,6 +2,18 @@ class UserModel {
 
 
 
+  String uid;
+  String email;
+  String firstName;
+  String secondName;
+  String userName;
+  String dateOfBirth;
+  String phoneNumber;
+  String leftMac;
+  String rightMac;
+
+
+
   UserModel({
     required
     this.email,
@@ -17,18 +29,15 @@ class UserModel {
     this.phoneNumber,
     required
     this.userName,
+    required
+    this.leftMac,
+    required
+    this.rightMac,
   });
 
 
 
 
-  String uid;
-  String email;
-  String firstName;
-  String secondName;
-  String userName;
-  String dateOfBirth;
-  String phoneNumber;
 
 
 
@@ -45,7 +54,8 @@ class UserModel {
       userName: map["userName"],
       phoneNumber: map["phoneNumber"],
       dateOfBirth: map["dateOfBirth"],
-
+      leftMac: map["leftMac"],
+      rightMac: map["rightMac"],
     );
   }
 
@@ -61,6 +71,8 @@ class UserModel {
       "userName":userName,
       "phoneNumber":phoneNumber,
       "dateOfBirth":dateOfBirth,
+      "leftMac":leftMac,
+      "rightMac":rightMac,
 
     };
   }
