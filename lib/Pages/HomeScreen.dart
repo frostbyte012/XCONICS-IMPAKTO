@@ -10,7 +10,10 @@ import 'settings.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'faq_screen.dart';
 import 'health_file.dart';
-import 'package:flutter_blue/flutter_blue.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:xconics_app_custom_widget_pages_coponents_library/Bluetooth_Plus/ble_plus.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -22,33 +25,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  FlutterBlue flutterBlue = FlutterBlue.instance;
 
-  Future<void> flutter_Blue() async {
-    await flutterBlue.startScan(timeout: Duration(seconds: 4));
-
-// Listen to scan results
-    var subscription = flutterBlue.scanResults.listen((results) {
-      // do something with scan results
-      for (ScanResult r in results) {
-        print('${r.device.name} found! rssi: ${r.rssi}');
-      }
-    });
-
-// Stop scanning
-    flutterBlue.stopScan();
-  }
-
-  Future<void> blue_connect()async
-  {
-    // Connect to the device
-    var device;
-    await device.connect();
-
-// Disconnect from device
-    device.disconnect();
-  }
-
+   int? stepCachevalue=0;
+   bool scan_on=true;
+   bool isStepUpdate=false;
    var AutoTextColor = InactiveTextSliderColor;
    var AutoColor= InactiveCardColor;
    var ManualColor = InactiveCardColor;
@@ -82,6 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
        current_text=manual_text;
        current_icon=manual_icon;
        mode=0;
+       isStepUpdate=true;
+       Fluttertoast.showToast(msg: "Auto mode : On");
+
       }
      );
    }
@@ -96,6 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
        current_text=auto_text;
        current_icon=auto_icon;
        mode=1;
+       isStepUpdate=false;
+       Fluttertoast.showToast(msg: "Manual mode : On");
 
      });
    }
@@ -180,21 +165,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
-    flutter_Blue();
-    blue_connect();
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
         iconTheme: IconThemeData(color: AccentColor,size: 40),
         backgroundColor: Colors.white,
         actions: [
-              LoadingAnimationWidget.inkDrop(color: AccentColor, size: 30),
+              if(scan_on) LoadingAnimationWidget.inkDrop(color: AccentColor, size: 30),
               SizedBox(width: 0,),
               IconButton(onPressed: (){}, icon: Icon(Icons.notifications,color: AccentColor,)),
-              Image.asset("images/appbar/left_shoe_${left_shoe_connected}_connected.jpeg",width:40,height: 40,),
+              InkWell(onTap: (){},child: Image.asset("images/appbar/left_shoe_${left_shoe_connected}_connected.jpeg",width:40,height: 40,)),
               SizedBox(width: 10,),
-              Image.asset("images/appbar/right_shoe_${right_shoe_connected}_connected.jpeg",width: 40,height: 40,),
+              InkWell(onTap: (){},child:Image.asset("images/appbar/right_shoe_${right_shoe_connected}_connected.jpeg",width: 40,height: 40,),),
               SizedBox(width: 20,),
               Image.asset("images/appbar/battery_${left_shoe_battery}.jpeg",width: 30,height: 30,),
               SizedBox(width: 10,),
@@ -330,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Center(child:Text("0",style:TextStyle(fontWeight:FontWeight.normal,fontSize:100.0,color: Colors.black),),),
+                        Center(child:Text("${stepCachevalue}",style:TextStyle(fontWeight:FontWeight.normal,fontSize:100.0,color: Colors.black),),),
                         SizedBox(height:5,),
                         Center(child:Text("Steps",style:TextStyle(fontWeight:FontWeight.bold,fontSize:20.0,color: Colors.black),),),
                       ],
@@ -376,7 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: (){},
                       child: Column(
                         children: [
-                          Text("0.0",style: TextStyle(fontSize: 30),),
+                          Text("${TotalMile}",style: TextStyle(fontSize: 30),),
                           Text("Distance(mi)",style: TextStyle(color: AccentColor,fontWeight: FontWeight.bold)),
                         ],
                       ),
@@ -396,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap:(){},
                       child: Column(
                         children: [
-                          Text("0.0",style: TextStyle(fontSize: 30),),
+                          Text("${Callories}",style: TextStyle(fontSize: 30),),
                           Text("Calories",style: TextStyle(color: AccentColor,fontWeight: FontWeight.bold)),
                         ],
                       ),
